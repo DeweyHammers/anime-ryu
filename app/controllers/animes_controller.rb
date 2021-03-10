@@ -1,0 +1,3 @@
+class AnimesController < ApplicationController 
+  
+end
