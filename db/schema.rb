@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_184530) do
+ActiveRecord::Schema.define(version: 2021_03_11_220637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "animes", force: :cascade do |t|
-    t.string "title"
+    t.string "name"
     t.string "url"
     t.string "image_url"
     t.string "user_content"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_184530) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
+    t.string "name"
     t.string "email"
     t.string "password_digest"
   end

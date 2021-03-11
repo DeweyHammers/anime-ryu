@@ -13,7 +13,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    erb :index
+    if Helpers.logged_in?(session)
+      redirect '/animes'
+    else
+      Helpers.set_webpage('index')
+      erb :index
+    end
   end
 
 end
