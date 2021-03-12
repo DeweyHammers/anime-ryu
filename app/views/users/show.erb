@@ -1,0 +1,7 @@
+<h1>Your anime list</h1>
+<a href='/animes/new'>Add Anime</a> 
+<% if !@user.animes.empty? %>
+
+<% else %>
+  <h3>You dont't have any animes added to your list yet, Please add some!</h3>
+<% end %>

@@ -1,0 +1,15 @@
+<% if !@anime %>
+  <form action="/animes/new" method="POST">
+    <h3>Please search for a anime name</h3>
+    <input type='text' name='name' placeholder='Anime Title'><br>
+    <input type='submit' value='Search'>
+  </form>
+<% else %>
+  <h1><%= @anime.name %></h1>
+  <img src="<%= @anime.image_url %>">
+  <p><%= @anime.synopsis %></p>
+  <form action="/animes/new" method="POST">
+    <h3>Find a new anime?</h3>
+    <input type='submit' name='remove' value='Remove'>
+  <form>
+<% end %>

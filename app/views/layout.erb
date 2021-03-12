@@ -36,7 +36,7 @@
               </a>
             </li>
             <!-- USER LOGGED OUT -->
-            <% if Helpers.logged_in?(session) == false %>
+            <% if !Helpers.logged_in?(session) %>
               <!-- LOGIN ROUTE -->
               <li class="nav-item">
                 <a class="nav-link <%= 'active' if Helpers.webpage == 'login' %>" href="/login">

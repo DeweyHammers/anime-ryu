@@ -1,5 +1,8 @@
 class Api
-  URL = "https://swapi.dev/api/"
+  URL = "https://api.jikan.moe/v3/search/anime?q="
   
-
+  def self.get_anime(name)
+    page = HTTParty.get("#{URL}#{name}")
+    page['results'].first
+  end
 end
