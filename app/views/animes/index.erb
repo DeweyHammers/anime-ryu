@@ -1,7 +1,12 @@
 <% @users.each do |user| %>
   <h1><%= user.name %>'s Anime list</h1>
   <% if !user.animes.empty? %>
-    
+    <% user.animes.each do |anime| %>
+      <h2><%= anime.name %></h2>
+      <img src="<%= anime.image_url %>">
+      <p><%= anime.synopsis %></p>
+      <a href='/animes/<%= user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
+    <% end %>
   <% else %>
     <h3>Has no animes added yet to list!</h3>
   <% end %>

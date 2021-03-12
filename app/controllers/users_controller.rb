@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   get '/sign-up' do
     if Helpers.logged_in?(session)
-      session[:anime_found] = nil
       redirect '/animes'
     else 
       Helpers.set_webpage('sign-up')
@@ -11,23 +10,21 @@ class UsersController < ApplicationController
   end
 
   post '/sign-up' do
-    if params[:name] = '' && params[:email] = '' && params[:password] = ''
-      redirect '/sign-up'
-    else
-      user = User.save(params)
-      if User.find_by(name: user.name, email: user.email)
-        redirect '/login'
+    if params[:name] && params[:email] && params[:password] 
+      if User.find_by(name: params[:name], email: params[:email])
+        redirect '/sign-up'
       else
         user = User.create(params)
-        session['user_id'] = @user.id
+        session['user_id'] = user.id
         redirect "/animes"
       end
+    else
+      redirect '/sign-up'
     end
   end
 
   get '/login' do
     if Helpers.logged_in?(session)
-      session[:anime_found] = nil
       redirect '/animes'
     else
       Helpers.set_webpage('login')
@@ -39,7 +36,6 @@ class UsersController < ApplicationController
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      session[:anime_found] = nil
       redirect "/animes"
     else
       redirect "/login"
@@ -49,7 +45,6 @@ class UsersController < ApplicationController
   get '/users/:slug' do
     if Helpers.logged_in?(session)
       Helpers.set_webpage('user')
-      session[:anime_found] = nil
       @user = User.find_by_slug(params[:slug])
       erb :'users/show'
     else 

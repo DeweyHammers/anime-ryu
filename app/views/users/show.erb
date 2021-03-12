@@ -1,7 +1,12 @@
 <h1>Your anime list</h1>
-<a href='/animes/new'>Add Anime</a> 
+<a href='/animes/search'>Add Anime</a> 
 <% if !@user.animes.empty? %>
-
+  <% @user.animes.each do |anime| %>
+    <h1><%= anime.name %></h1>
+    <img src="<%= anime.image_url %>">
+    <p><%= anime.synopsis %></p>
+    <a href='/animes/<%= @user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
+  <% end %>
 <% else %>
-  <h3>You dont't have any animes added to your list yet, Please add some!</h3>
+  <h3>You don't have any animes added to your list yet, Please add some!</h3>
 <% end %>
