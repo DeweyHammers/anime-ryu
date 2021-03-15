@@ -14,7 +14,7 @@
       <a href='/animes/<%= user.slug %>/<%= anime.slug %>/<%= anime.id %>'><img src="<%= anime.image_url %>"></a><br>
       <p>Review: <%= anime.user_content %></p>
       <p>Rating: <%= anime.user_rating %>/5</p>
-      <p>Current Episode: <%= anime.user_current_ep %></p>
+      <p>Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
     <% end %>
   <% else %>
     <h3>Has no animes added yet to list!</h3>

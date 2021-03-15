@@ -6,7 +6,7 @@
   <h1>Your anime list</h1>
   <a href='/animes/search'>Add Anime</a>
 <% else %>
-  <h1><%= @page_user.name %>s show page</h1>
+  <h1><%= @page_user.name %>'s show page</h1>
 <% end %>
 
 <% if !@page_user.animes.empty? %>
@@ -14,9 +14,13 @@
     <h2><a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><%= anime.name %></a></h2>
     <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><img src="<%= anime.image_url %>"></a><br>
     <p>Review: <%= anime.user_content %></p>
-    <p>Current Episode: <%= anime.user_current_ep %></p>
-    <p>Rating: <%= anime.user_rating %></p>
+    <p>Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
+    <p>Rating: <%= anime.user_rating %>/5</p>
   <% end %>
 <% else %>
-  <h3>You don't have any animes added to your list yet, Please add some!</h3>
+  <% if @page_user.id == Helpers.current_user(session).id %>
+    <h3>You don't have any animes added to your list yet, Please add some!</h3>
+  <% else %>
+    <h3>Does not have any animes saved yet!</h3>
+  <% end %>
 <% end %>

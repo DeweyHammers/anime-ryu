@@ -7,8 +7,9 @@
 <a target="_blank" href='<%= @anime.url %>'>More info</a>
 <p><%= @anime.synopsis %></p>
 <p>Review: <%= @anime.user_content %></p>
-<p>Current Episode: <%= @anime.user_current_ep %></p>
+<p>Current Episode: <%= @anime.user_current_ep %>/<%= @anime.episodes %></p>
 <p>Rating: <%= @anime.user_rating %>/5</p>
+<p>Created on: <%= @anime.created_at.strftime("%m/%d/%Y") %></p>
 
 <a href='/animes'>Home</a>
 <a href='/users/<%= @anime.user.slug %>'>Back</a>
