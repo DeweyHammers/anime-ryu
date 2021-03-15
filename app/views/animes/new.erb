@@ -15,22 +15,25 @@
   <label for="user_content">Your Review:</label>
   <textarea id='user_content' name='user_content' rows="5" cols="33" required></textarea><br>
 
-  <label for="user_rating">Choose your rating</label>
-  <select id="user_rating" name="user_rating" required>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-  </select><br>
-
   <label for="user_episode">Current Episode</label>
-  <select id="user_eposode" name="user_episode" required>
+  <select id="user_eposode" name="user_episode">
     <% episodes = @anime.episodes %>
-    <% while episodes < 0 %>
-      <option value=""></option>
+    <% episode = 0 %>
+    <% while episodes > 0 %>
+      <% episode += 1 %>
+      <option><%= episode %></option>
       <% episodes -= 1 %>
     <% end %>
+  </select><br>
+
+
+  <label for="user_rating">Choose your rating</label>
+  <select id="user_rating" name="user_rating">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
   </select><br>
 
   <input type='submit' value='Save Anime'>

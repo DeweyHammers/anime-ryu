@@ -23,11 +23,10 @@ class AnimesController < ApplicationController
 
   post '/animes/search' do 
     if params[:name]
-      match = Helpers.current_user(session).animes.each {|anime| anime.name == params[:name]}.first
-      if params[:name] != match.name
-        redirect "/animes/#{Anime.new(name: params[:name]).slug}/new"
+      if Helpers.current_user(session).animes.each {|anime| anime.name == params[:name]}.first
+        redirect '/animes/search'
       else 
-       redirect '/animes/search'
+        redirect "/animes/#{Anime.new_from_api(params[:name]).slug}/new"
       end
     else 
       redirect '/animes/search'
@@ -46,11 +45,12 @@ class AnimesController < ApplicationController
   end
 
   post '/animes/:slug/new' do
-    if params[:user_content] && params[:user_rating]
+    if params[:user_content]
       @user = Helpers.current_user(session)
       @anime = Anime.new_from_api(params[:slug])
       @anime.update(
-        user_content: params[:user_content], 
+        user_content: params[:user_content],
+        user_current_ep: params[:user_episode], 
         user_rating: params[:user_rating]
       )
       @user.animes << @anime
@@ -93,6 +93,7 @@ class AnimesController < ApplicationController
       @anime = Anime.find_by_id(params[:id])
       @anime.update(
         user_content: params[:user_content],
+        user_current_ep: params[:user_episode],
         user_rating: params[:user_rating]
       )
       redirect "/animes/#{@anime.user.slug}/#{@anime.slug}/#{@anime.id}"

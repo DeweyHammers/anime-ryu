@@ -5,16 +5,31 @@
 <h2>Please fill out your info!</h2>
 <form action='/animes/<%= @user.slug %>/<%= @anime.slug %>/<%= @anime.id %>/edit' method="POST">
   <input type='hidden' name='_method' value='PATCH'>
+
   <label for="user_content">Your Review:</label>
   <textarea id='user_content' name='user_content' rows="5" cols="33" required><%= @anime.user_content %></textarea><br>
+
+  <label for="user_episode">Current Episode</label>
+  <select id="user_eposode" name="user_episode">
+    <option selected hidden><%= @anime.user_current_ep %></option>
+    <% episodes = @anime.episodes %>
+    <% episode = 0 %>
+    <% while episodes > 0 %>
+      <% episode += 1 %>
+      <option><%= episode %></option>
+      <% episodes -= 1 %>
+    <% end %>
+  </select><br>
+
   <label for="user_rating">Choose your rating</label>
   <select id="user_rating" name="user_rating" required>
-    <option value="<%= @anime.user_rating %>" selected hidden><%= @anime.user_rating %></option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
+    <option selected hidden><%= @anime.user_rating %></option>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
   </select><br>
+
   <input type='submit' value='Update Anime'>
 </form>

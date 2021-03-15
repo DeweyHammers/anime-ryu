@@ -11,12 +11,11 @@
 
 <% if !@page_user.animes.empty? %>
   <% @page_user.animes.each do |anime| %>
-    <h1><%= anime.name %></h1>
-    <img src="<%= anime.image_url %>">
-    <p><%= anime.synopsis %></p>
+    <h2><a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><%= anime.name %></a></h2>
+    <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><img src="<%= anime.image_url %>"></a><br>
     <p>Review: <%= anime.user_content %></p>
+    <p>Current Episode: <%= anime.user_current_ep %></p>
     <p>Rating: <%= anime.user_rating %></p>
-    <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
   <% end %>
 <% else %>
   <h3>You don't have any animes added to your list yet, Please add some!</h3>

@@ -3,17 +3,18 @@
 <br>
 
 <% @users.each do |user| %>
-  <h1><%= user.name %>'s Anime list</h1>
   <% if user.id != Helpers.current_user(session).id %>
-    <a href="users/<%= user.slug %>">Show page</a>
+    <h1><a href="users/<%= user.slug %>"><%= user.name %>'s</a> Anime list</h1>
+  <% else %>
+    <h1>Your Anime list</h1>
   <% end %>
   <% if !user.animes.empty? %>
     <% user.animes.each do |anime| %>
-      <h2><%= anime.name %></h2>
-      <img src="<%= anime.image_url %>">
+      <h2><a href='/animes/<%= user.slug %>/<%= anime.slug %>/<%= anime.id %>'><%= anime.name %></a></h2>
+      <a href='/animes/<%= user.slug %>/<%= anime.slug %>/<%= anime.id %>'><img src="<%= anime.image_url %>"></a><br>
       <p>Review: <%= anime.user_content %></p>
-      <p>Rating: <%= anime.user_rating %></p>
-      <a href='/animes/<%= user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
+      <p>Rating: <%= anime.user_rating %>/5</p>
+      <p>Current Episode: <%= anime.user_current_ep %></p>
     <% end %>
   <% else %>
     <h3>Has no animes added yet to list!</h3>

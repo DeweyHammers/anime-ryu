@@ -3,11 +3,14 @@
 <br>
 
 <h1><%= @anime.name %></h1>
-<img src="<%= @anime.image_url %>">
+<img src="<%= @anime.image_url %>"><br>
+<a target="_blank" href='<%= @anime.url %>'>More info</a>
 <p><%= @anime.synopsis %></p>
 <p>Review: <%= @anime.user_content %></p>
-<p>Rating: <%= @anime.user_rating %></p>
+<p>Current Episode: <%= @anime.user_current_ep %></p>
+<p>Rating: <%= @anime.user_rating %>/5</p>
 
+<a href='/animes'>Home</a>
 <a href='/users/<%= @anime.user.slug %>'>Back</a>
 
 <% if @user.id == @anime.user.id %>
