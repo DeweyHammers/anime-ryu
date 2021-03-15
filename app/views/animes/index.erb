@@ -1,8 +1,12 @@
 <br>
 <br>
 <br>
+
 <% @users.each do |user| %>
   <h1><%= user.name %>'s Anime list</h1>
+  <% if user.id != Helpers.current_user(session).id %>
+    <a href="users/<%= user.slug %>">Show page</a>
+  <% end %>
   <% if !user.animes.empty? %>
     <% user.animes.each do |anime| %>
       <h2><%= anime.name %></h2>

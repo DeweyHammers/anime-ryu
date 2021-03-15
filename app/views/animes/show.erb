@@ -1,8 +1,19 @@
 <br>
 <br>
 <br>
+
 <h1><%= @anime.name %></h1>
 <img src="<%= @anime.image_url %>">
 <p><%= @anime.synopsis %></p>
 <p>Review: <%= @anime.user_content %></p>
 <p>Rating: <%= @anime.user_rating %></p>
+
+<a href='/users/<%= @anime.user.slug %>'>Back</a>
+
+<% if @user.id == @anime.user.id %>
+  <a href="/animes/<%= @user.slug %>/<%= @anime.slug %>/<%= @anime.id %>/edit">Update</a>
+  <form method="POST" action='/animes/<%= @user.slug %>/<%= @anime.slug %>/<%= @anime.id %>/delete'>
+    <input type="hidden" name="_method" value='DELETE'>
+    <input type="submit" value="Delete">  
+  </form>
+<% end %>

@@ -1,13 +1,22 @@
-<h1>Your anime list</h1>
-<a href='/animes/search'>Add Anime</a> 
-<% if !@user.animes.empty? %>
-  <% @user.animes.each do |anime| %>
+<br>
+<br>
+<br>
+
+<% if @page_user.id == Helpers.current_user(session).id %>
+  <h1>Your anime list</h1>
+  <a href='/animes/search'>Add Anime</a>
+<% else %>
+  <h1><%= @page_user.name %>s show page</h1>
+<% end %>
+
+<% if !@page_user.animes.empty? %>
+  <% @page_user.animes.each do |anime| %>
     <h1><%= anime.name %></h1>
     <img src="<%= anime.image_url %>">
     <p><%= anime.synopsis %></p>
     <p>Review: <%= anime.user_content %></p>
     <p>Rating: <%= anime.user_rating %></p>
-    <a href='/animes/<%= @user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
+    <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'>See more..</a>
   <% end %>
 <% else %>
   <h3>You don't have any animes added to your list yet, Please add some!</h3>

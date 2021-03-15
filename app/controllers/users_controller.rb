@@ -44,8 +44,9 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     if Helpers.logged_in?(session)
-      Helpers.set_webpage('user')
-      @user = User.find_by_slug(params[:slug])
+      @page_user = User.find_by_slug(params[:slug])
+      @user = Helpers.current_user(session)
+      Helpers.set_webpage('user') if @page_user.id == @user.id
       erb :'users/show'
     else 
       redirect '/login'
