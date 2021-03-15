@@ -10,7 +10,8 @@ class Anime < ActiveRecord::Base
       name: results['title'], 
       url: results['url'], 
       image_url: results['image_url'], 
-      synopsis: results['synopsis']
+      synopsis: results['synopsis'],
+      episodes: results['episodes']
     )
   end
 end

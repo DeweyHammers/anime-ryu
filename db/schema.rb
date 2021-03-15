@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_193038) do
+ActiveRecord::Schema.define(version: 2021_03_15_171934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,8 @@ ActiveRecord::Schema.define(version: 2021_03_12_193038) do
     t.string "synopsis"
     t.integer "user_rating"
     t.boolean "watched"
-    t.integer "current_ep"
+    t.integer "user_current_ep"
+    t.integer "episodes"
   end
 
   create_table "users", force: :cascade do |t|
