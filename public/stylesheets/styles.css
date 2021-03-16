@@ -1,0 +1,19 @@
+body {
+  font-family: 'PT Sans', sans-serif;
+  background-color: #DCE1E3;
+}
+
+.form-container {
+  margin-top: 150px;
+}
+
+.form-user-ath {
+  background-color: #D9DDDC;
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}

@@ -10,17 +10,13 @@ class UsersController < ApplicationController
   end
 
   post '/sign-up' do
-    if params[:name] && params[:email] && params[:password] 
-      if User.find_by(name: params[:name], email: params[:email])
-        redirect '/sign-up'
-      else
-        user = User.create(params)
-        session['user_id'] = user.id
-        redirect "/animes"
-      end
+    if params[:name] && params[:email] && params[:password] && !User.find_by(name: params[:name], email: params[:email]) && params[:password].length >= 8
+      user = User.create(params)
+      session['user_id'] = user.id
+      redirect "/animes"
     else
       redirect '/sign-up'
-    end
+    end 
   end
 
   get '/login' do
