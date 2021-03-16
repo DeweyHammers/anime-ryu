@@ -23,7 +23,11 @@ class AnimesController < ApplicationController
 
   post '/animes/search' do 
     if params[:name]
-      if Helpers.current_user(session).animes.each {|anime| anime.name == params[:name]}.first
+      user =  Helpers.current_user(session)
+      anime_check = Anime.new_from_api(params[:name])
+      check = false
+      user.animes.each { |anime| check = true if anime.name == anime_check.name }
+      if check
         redirect '/animes/search'
       else 
         redirect "/animes/#{Anime.new_from_api(params[:name]).slug}/new"
