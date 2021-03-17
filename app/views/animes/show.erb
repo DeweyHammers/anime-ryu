@@ -14,9 +14,9 @@
 <a href='/animes'>Home</a>
 <a href='/users/<%= @anime.user.slug %>'>Back</a>
 
-<% if @user.id == @anime.user.id %>
-  <a href="/animes/<%= @user.slug %>/<%= @anime.slug %>/<%= @anime.id %>/edit">Update</a>
-  <form method="POST" action='/animes/<%= @user.slug %>/<%= @anime.slug %>/<%= @anime.id %>/delete'>
+<% if @user.id == current_user.id %>
+  <a href="/animes/<%= @user.slug %>/<%= @anime.slug %>/edit">Update</a>
+  <form method="POST" action='/animes/<%= @user.slug %>/<%= @anime.slug %>/delete'>
     <input type="hidden" name="_method" value='DELETE'>
     <input type="submit" value="Delete">  
   </form>
