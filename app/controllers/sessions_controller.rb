@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
     if logged_in?
       redirect '/animes'
     else
-      set_webpage
       erb :'users/login'
     end
   end
