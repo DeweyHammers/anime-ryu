@@ -11,8 +11,8 @@
 
 <% if !@page_user.animes.empty? %>
   <% @page_user.animes.each do |anime| %>
-    <h2><a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><%= anime.name %></a></h2>
-    <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>/<%= anime.id %>'><img src="<%= anime.image_url %>"></a><br>
+    <h2><a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>'><%= anime.name %></a></h2>
+    <a href='/animes/<%= @page_user.slug %>/<%= anime.slug %>'><img src="<%= anime.image_url %>"></a><br>
     <p>Review: <%= anime.user_content %></p>
     <p>Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
     <p>Rating: <%= anime.user_rating %>/5</p>

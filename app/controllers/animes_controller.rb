@@ -22,10 +22,8 @@ class AnimesController < ApplicationController
   post '/animes/search' do 
     if params[:name]
       user = current_user
-      anime_check = Anime.new_from_api(params[:name])
-      check = false
-      user.animes.each { |anime| check = true if anime.name == anime_check.name }
-      redirect !check ? "/animes/#{Anime.new_from_api(params[:name]).slug}/new" : '/animes/search'
+      anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}
+      redirect !anime ? "/animes/#{Anime.new_from_api(params[:name]).slug}/new" : '/animes/search'
     else 
       redirect '/animes/search'
     end
@@ -57,22 +55,20 @@ class AnimesController < ApplicationController
     end
   end
 
-  get '/animes/:user_slug/:anime_slug/:id' do
+  get '/animes/:user_slug/:anime_slug' do
     if logged_in?
-      @user = current_user
-      @page_user = User.find_by_slug(params[:user_slug])
-      @anime = Anime.find_by_id(params[:id])
+      @user = User.find_by_slug(params[:user_slug])
+      @anime = @user.animes.select {|anime| anime.slug == params[:anime_slug]}
       erb :'animes/show'
     else
       redirect '/login'
     end
   end
 
-  get '/animes/:user_slug/:anime_slug/:id/edit' do
+  get '/animes/:user_slug/:anime_slug/edit' do
     if logged_in?
-      @user = current_user
-      @page_user = User.find_by_slug(params[:user_slug])
-      @anime = Anime.find_by_id(params[:id])
+      @user = User.find_by_slug(params[:user_slug])
+      @anime = @user.animes.select {|anime| anime.slug == params[:anime_slug]}
       if @user.id  == @anime.user.id
         erb :'animes/edit'
       else
@@ -83,10 +79,11 @@ class AnimesController < ApplicationController
     end
   end
 
-  patch '/animes/:user_slug/:anime_slug/:id/edit' do
+  patch '/animes/:user_slug/:anime_slug/edit' do
     if params[:user_content] && params[:user_rating]
-      @anime = Anime.find_by_id(params[:id])
-      @anime.update(
+      user = User.find_by_slug(params[:user_slug])
+      anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}
+      anime.update(
         user_content: params[:user_content],
         user_current_ep: params[:user_episode],
         user_rating: params[:user_rating]
@@ -97,10 +94,10 @@ class AnimesController < ApplicationController
     end
   end
 
-  delete '/animes/:user_slug/:anime_slug/:id/delete' do
-    @anime = Anime.find_by_id(params[:id])
-    @user = @anime.user
-    @anime.delete
+  delete '/animes/:user_slug/:anime_slug/delete' do
+    user = User.find_by_slug(params[:user_slug])
+    anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}
+    anime.delete
     redirect "users/#{@user.slug}"
   end
 end
