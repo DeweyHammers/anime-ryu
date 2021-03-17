@@ -1,10 +1,9 @@
 class AnimesController < ApplicationController
   
   get '/animes' do
-    if Helpers.logged_in?(session)
-      Helpers.set_webpage('anime_index')
+    if logged_in?
       @users = User.all
-      @user = Helpers.current_user(session)
+      @user = current_user
       erb :'animes/index'
     else
       redirect '/login'
@@ -12,9 +11,8 @@ class AnimesController < ApplicationController
   end
 
   get '/animes/search' do
-    if Helpers.logged_in?(session)
-      @user = Helpers.current_user(session)
-      Helpers.set_webpage('user')
+    if logged_in?
+      @user = current_user
       erb :'animes/search'
     else
       redirect '/login'
@@ -23,24 +21,19 @@ class AnimesController < ApplicationController
 
   post '/animes/search' do 
     if params[:name]
-      user =  Helpers.current_user(session)
+      user = current_user
       anime_check = Anime.new_from_api(params[:name])
       check = false
       user.animes.each { |anime| check = true if anime.name == anime_check.name }
-      if check
-        redirect '/animes/search'
-      else 
-        redirect "/animes/#{Anime.new_from_api(params[:name]).slug}/new"
-      end
+      redirect !check ? "/animes/#{Anime.new_from_api(params[:name]).slug}/new" : '/animes/search'
     else 
       redirect '/animes/search'
     end
   end
 
   get '/animes/:slug/new' do
-    if Helpers.logged_in?(session)
-      Helpers.set_webpage('user')
-      @user = Helpers.current_user(session)
+    if logged_in?
+      @user = current_user
       @anime = Anime.new_from_api(params[:slug])
       erb :'animes/new'
     else
@@ -49,8 +42,8 @@ class AnimesController < ApplicationController
   end
 
   post '/animes/:slug/new' do
-    if params[:user_content]
-      @user = Helpers.current_user(session)
+    if params[:user_content] && params[:user_episode] && params[:user_rating]
+      @user = current_user
       @anime = Anime.new_from_api(params[:slug])
       @anime.update(
         user_content: params[:user_content],
@@ -65,11 +58,10 @@ class AnimesController < ApplicationController
   end
 
   get '/animes/:user_slug/:anime_slug/:id' do
-    if Helpers.logged_in?(session)
-      @user = Helpers.current_user(session)
+    if logged_in?
+      @user = current_user
       @page_user = User.find_by_slug(params[:user_slug])
       @anime = Anime.find_by_id(params[:id])
-      Helpers.set_webpage('user') if @page_user.id == @user.id
       erb :'animes/show'
     else
       redirect '/login'
@@ -77,12 +69,11 @@ class AnimesController < ApplicationController
   end
 
   get '/animes/:user_slug/:anime_slug/:id/edit' do
-    if Helpers.logged_in?(session)
-      @user = Helpers.current_user(session)
+    if logged_in?
+      @user = current_user
       @page_user = User.find_by_slug(params[:user_slug])
       @anime = Anime.find_by_id(params[:id])
       if @user.id  == @anime.user.id
-        Helpers.set_webpage('user')
         erb :'animes/edit'
       else
         redirect "/animes/#{@page_user.slug}/#{@anime.slug}/#{@anime.id}"

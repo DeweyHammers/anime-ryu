@@ -4,5 +4,6 @@ ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']) if ENV['DATABASE_UR
 
 use Rack::MethodOverride
 use UsersController
+use SessionsController
 use AnimesController
 run ApplicationController

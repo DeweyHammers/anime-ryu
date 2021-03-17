@@ -1,59 +1,33 @@
 class UsersController < ApplicationController 
 
   get '/sign-up' do
-    if Helpers.logged_in?(session)
+    if logged_in?
       redirect '/animes'
     else 
-      Helpers.set_webpage('sign-up')
       erb :'users/new'
     end
   end
 
   post '/sign-up' do
-    if params[:name] && params[:email] && params[:password] && !User.find_by(name: params[:name], email: params[:email]) && params[:password].length >= 8
-      user = User.create(params)
-      session['user_id'] = user.id
-      redirect "/animes"
+    if params[:name] && params[:email] && params[:password] && params[:password_confirmation] &&
+       !User.find_by(name: params[:name], email: params[:email]) &&
+       params[:password] == params[:password_confirmation] && 
+       params[:password].length >= 8 
+        user = User.create(params)
+        session['user_id'] = user.id
+        redirect "/animes"
     else
       redirect '/sign-up'
     end 
   end
 
-  get '/login' do
-    if Helpers.logged_in?(session)
-      redirect '/animes'
-    else
-      Helpers.set_webpage('login')
-      erb :'users/login'
-    end
-  end
-
-  post '/login' do
-    user = User.find_by(name: params[:name])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect "/animes"
-    else
-      redirect "/login"
-    end
-  end
-
+  
   get '/users/:slug' do
-    if Helpers.logged_in?(session)
+    if logged_in?
       @page_user = User.find_by_slug(params[:slug])
-      @user = Helpers.current_user(session)
-      Helpers.set_webpage('user') if @page_user.id == @user.id
+      @user = current_user
       erb :'users/show'
     else 
-      redirect '/login'
-    end
-  end
-
-  get '/logout' do
-    if Helpers.logged_in?(session)
-      session.clear
-      redirect '/'
-    else
       redirect '/login'
     end
   end
