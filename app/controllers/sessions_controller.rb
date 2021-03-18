@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   get '/login' do
     if logged_in?
-      redirect '/animes'
+      redirect '/animes/home'
     else
       erb :'users/login'
     end
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect "/animes"
+      redirect "/animes/home"
     else
       redirect "/login"
     end
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
   get '/logout' do
     if logged_in?
       session.destroy
-      redirect '/'
+      redirect '/home'
     else
       redirect '/login'
     end

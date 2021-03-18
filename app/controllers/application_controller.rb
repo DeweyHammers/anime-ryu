@@ -12,9 +12,9 @@ class ApplicationController < Sinatra::Base
     use Rack::Flash
   end
 
-  get "/" do
+  get "/home" do
     if logged_in?
-      redirect '/animes'
+      redirect '/animes/home'
     else
       erb :index
     end

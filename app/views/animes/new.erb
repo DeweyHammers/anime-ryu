@@ -12,13 +12,13 @@
     </div>
   </div>
   <div class='anime-form mb-5'>
-    <form action='/animes/<%= @anime.slug %>/new' method="POST">
+    <form action='/animes/new/<%= @anime.slug %>' method="POST" class='needs-validation' novalidate>
       <h2>Please fill out your info!</h2>
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px"></textarea>
+        <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px" required></textarea>
         <label for="user_content">Your Review</label>
       </div>
-      <select class="form-select mt-2" aria-label="Default select example" id="user_eposode" name="user_episode">
+      <select class="form-select mt-2" aria-label="Default select example" id="user_eposode" name="user_episode" required>
         <option selected hidden>Current Episode</option>
         <% episodes = @anime.episodes %>
           <% episode = 0 %>
@@ -28,7 +28,7 @@
             <% episodes -= 1 %>
             <% end %>
       </select>
-      <select class="form-select mt-2" aria-label="Default select example" id="user_rating" name="user_rating">
+      <select class="form-select mt-2" aria-label="Default select example" id="user_rating" name="user_rating" required>
         <option selected hidden>Choose your rating</option>
         <option>1</option>
         <option>2</option>

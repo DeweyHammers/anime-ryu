@@ -2,7 +2,7 @@
   <div class='anime-form mb-5'>
     <h1><%= @anime.name %></h1>
     <h3>Please update your info!</h3>
-    <form action='/animes/<%= @user.slug %>/<%= @anime.slug %>/edit' method="POST">
+    <form action='/animes/<%= @user.slug %>/<%= @anime.slug %>/edit' method="POST" class='needs-validation' novalidate>
       <input type='hidden' name='_method' value='PATCH'>
       <div class="form-floating">
         <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px"><%= @anime.user_content %></textarea>

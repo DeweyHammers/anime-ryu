@@ -10,7 +10,7 @@
         <p class="card-text">Current Episode: <%= @anime.user_current_ep %>/<%= @anime.episodes %></p>
         <p class="card-text">Rating: <%= @anime.user_rating %>/5</p>
         <p class="card-text">Created on: <%= @anime.created_at.strftime("%m/%d/%Y") %></p>
-        <a class="btn btn-outline-secondary" href='/animes'>Home</a>
+        <a class="btn btn-outline-secondary" href='/animes/home'>Home</a>
         <a class="btn btn-outline-secondary" href='/users/<%= @anime.user.slug %>'><%= @anime.user.id == current_user.id ? 'Your Show Page' : "#{@anime.user.name} Show Page" %></a>
         <% if @anime.user.id == current_user.id %>
           <a class="btn btn-outline-success" href="/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/edit">Update</a>
