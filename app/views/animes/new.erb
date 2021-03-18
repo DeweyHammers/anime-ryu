@@ -1,40 +1,42 @@
-<br>
-<br>
-<br>
-
-<h1><%= @anime.name %></h1>
-<img src='<%= @anime.image_url %>'><br>
-<a target="_blank" href='<%= @anime.url %>'>More info</a>
-<p><%= @anime.synopsis %></p>
-
-<h3>Find a new anime?</h3>
-<a href='/animes/search'>Remove</a>
-
-<h2>Please fill out your info!</h2>
-<form action='/animes/<%= @anime.slug %>/new' method="POST">
-  <label for="user_content">Your Review:</label>
-  <textarea id='user_content' name='user_content' rows="5" cols="33" required></textarea><br>
-
-  <label for="user_episode">Current Episode</label>
-  <select id="user_eposode" name="user_episode">
-    <% episodes = @anime.episodes %>
-    <% episode = 0 %>
-    <% while episodes > 0 %>
-      <% episode += 1 %>
-      <option><%= episode %></option>
-      <% episodes -= 1 %>
-    <% end %>
-  </select><br>
-
-
-  <label for="user_rating">Choose your rating</label>
-  <select id="user_rating" name="user_rating">
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-  </select><br>
-
-  <input type='submit' value='Save Anime'>
-</form>
+<main class='text-center anime-container'>
+  <div class='anime-card mb-5'>
+    <div class='card'>
+      <img class="card-img-top" src='<%= @anime.image_url %>'><br>
+      <div class='card-body'>
+        <h1 class="card-title"><%= @anime.name %></h1>
+        <a class="btn btn-outline-info" target="_blank" href='<%= @anime.url %>'>MyAnimeList</a>
+        <p class="card-text"><%= @anime.synopsis %></p>
+        <h3 class="card-text">Find a new anime?</h3>
+        <a class="btn btn-outline-danger" href='/animes/search'>Remove</a>
+      </div>
+    </div>
+  </div>
+  <div class='anime-form mb-5'>
+    <form action='/animes/<%= @anime.slug %>/new' method="POST">
+      <h2>Please fill out your info!</h2>
+      <div class="form-floating">
+        <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px"></textarea>
+        <label for="user_content">Your Review</label>
+      </div>
+      <select class="form-select mt-2" aria-label="Default select example" id="user_eposode" name="user_episode">
+        <option selected hidden>Current Episode</option>
+        <% episodes = @anime.episodes %>
+          <% episode = 0 %>
+          <% while episodes > 0 %>
+            <% episode += 1 %>
+            <option><%= episode %></option>
+            <% episodes -= 1 %>
+            <% end %>
+      </select>
+      <select class="form-select mt-2" aria-label="Default select example" id="user_rating" name="user_rating">
+        <option selected hidden>Choose your rating</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <input class='w-100 btn btn-lg btn-outline-secondary mt-2' type='submit' value='Save Anime'>
+    </form>
+  </div>
+</main>
