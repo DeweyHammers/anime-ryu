@@ -1,22 +1,25 @@
-<br>
-<br>
-<br>
-
-<% @users.each do |user| %>
-  <% if user.id != current_user.id %>
-    <h1><a href="users/<%= user.slug %>"><%= user.name %>'s</a> Anime list</h1>
-  <% else %>
-    <h1>Your Anime list</h1>
-  <% end %>
-  <% if !user.animes.empty? %>
-    <% user.animes.each do |anime| %>
-      <h2><a href='/animes/<%= user.slug %>/<%= anime.slug %>'><%= anime.name %></a></h2>
-      <a href='/animes/<%= user.slug %>/<%= anime.slug %>'><img src="<%= anime.image_url %>"></a><br>
-      <p>Review: <%= anime.user_content %></p>
-      <p>Rating: <%= anime.user_rating %>/5</p>
-      <p>Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
+<main class='text-center anime-container'>
+  <% @users.each do |user| %>
+    <% if user.animes != [] %>
+      <div class='anime-card mb-5'>
+        <% if user.id != current_user.id %>
+          <h1><a class="link-secondary" href="users/<%= user.slug %>"><%= user.name %>'s</a> Anime list</h1>
+            <% else %>
+          <h1>Your Anime list</h1>
+        <% end %>
+        <% user.animes.each do |anime| %>
+          <div class='card mb-2'>
+            <a href='/animes/<%= user.slug %>/<%= anime.slug %>'><img class="card-img-top" src="<%= anime.image_url %>"></a>
+            <div class="card-body">
+              <h2 class="card-title"><%= anime.name %></h2>
+              <p class="card-text">Review: <%= anime.user_content %></p>
+              <p class="card-text">Rating: <%= anime.user_rating %>/5</p>
+              <p class="card-text">Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
+              <a href="/animes/<%= user.slug %>/<%= anime.slug %>" class="btn btn-outline-info">More Info</a>
+            </div>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-  <% else %>
-    <h3>Has no animes added yet to list!</h3>
   <% end %>
-<% end %>
+</main>

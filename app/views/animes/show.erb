@@ -1,23 +1,24 @@
-<br>
-<br>
-<br>
-
-<h1><%= @anime.name %></h1>
-<img src="<%= @anime.image_url %>"><br>
-<a target="_blank" href='<%= @anime.url %>'>More info</a>
-<p><%= @anime.synopsis %></p>
-<p>Review: <%= @anime.user_content %></p>
-<p>Current Episode: <%= @anime.user_current_ep %>/<%= @anime.episodes %></p>
-<p>Rating: <%= @anime.user_rating %>/5</p>
-<p>Created on: <%= @anime.created_at.strftime("%m/%d/%Y") %></p>
-
-<a href='/animes'>Home</a>
-<a href='/users/<%= @anime.user.slug %>'>Back</a>
-
-<% if @user.id == current_user.id %>
-  <a href="/animes/<%= @user.slug %>/<%= @anime.slug %>/edit">Update</a>
-  <form method="POST" action='/animes/<%= @user.slug %>/<%= @anime.slug %>/delete'>
-    <input type="hidden" name="_method" value='DELETE'>
-    <input type="submit" value="Delete">  
-  </form>
-<% end %>
+<main class='text-center anime-container'>
+  <div class='anime-card mb-5'>
+    <div class='card'>
+      <img class='card-img-top' src="<%= @anime.image_url %>">
+        <div class='card-body'>
+        <h1 class="card-title"><%= @anime.name %></h1>
+        <a class="btn btn-outline-info" target="_blank" href='<%= @anime.url %>'>MyAnimeList</a>
+        <p class="card-text">Synopsis: <%= @anime.synopsis %></p>
+        <p class="card-text">Review: <%= @anime.user_content %></p>
+        <p class="card-text">Current Episode: <%= @anime.user_current_ep %>/<%= @anime.episodes %></p>
+        <p class="card-text">Rating: <%= @anime.user_rating %>/5</p>
+        <p class="card-text">Created on: <%= @anime.created_at.strftime("%m/%d/%Y") %></p>
+        <a class="btn btn-outline-secondary" href='/animes'>Home</a>
+        <a class="btn btn-outline-secondary" href='/users/<%= @anime.user.slug %>'><%= @anime.user.id == current_user.id ? 'Your Show Page' : "#{@anime.user.name} Show Page" %></a>
+        <% if @anime.user.id == current_user.id %>
+          <a class="btn btn-outline-success" href="/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/edit">Update</a>
+          <form class='mt-2' method="POST" action='/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/delete'>
+            <input type="hidden" name="_method" value='DELETE'>
+            <input class="btn btn-outline-danger" type="submit" value="Delete">  
+          </form>
+        <% end %>
+      </div>
+    </div>
+  </main>

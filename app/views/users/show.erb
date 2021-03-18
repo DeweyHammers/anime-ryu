@@ -1,26 +1,29 @@
-<br>
-<br>
-<br>
-
-<% if @user.id == current_user.id %>
-  <h1>Your anime list</h1>
-  <a href='/animes/search'>Add Anime</a>
-<% else %>
-  <h1><%= @user.name %>'s show page</h1>
-<% end %>
-
-<% if !@user.animes.empty? %>
-  <% @user.animes.each do |anime| %>
-    <h2><a href='/animes/<%= @user.slug %>/<%= anime.slug %>'><%= anime.name %></a></h2>
-    <a href='/animes/<%= @user.slug %>/<%= anime.slug %>'><img src="<%= anime.image_url %>"></a><br>
-    <p>Review: <%= anime.user_content %></p>
-    <p>Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
-    <p>Rating: <%= anime.user_rating %>/5</p>
-  <% end %>
-<% else %>
-  <% if @user.id == current_user.id %>
-    <h3>You don't have any animes added to your list yet, Please add some!</h3>
-  <% else %>
-    <h3>Does not have any animes saved yet!</h3>
-  <% end %>
-<% end %>
+<main class='text-center anime-container'>
+  <div class='anime-card mb-5'>
+    <% if @user.id == current_user.id %>
+      <h1>Your Show Page</h1>
+    <% else %>
+      <h1><%= @user.name %>'s Show Page</h1>
+    <% end %>
+    <% if !@user.animes.empty? %>
+      <% @user.animes.each do |anime| %>
+        <div class='card mb-2'>
+          <a href='/animes/<%= @user.slug %>/<%= anime.slug %>'><img class="card-img-top" src="<%= anime.image_url %>"></a>
+          <div class="card-body">
+            <h2 class="card-title"><%= anime.name %></a></h2>
+            <p class="card-text">Review: <%= anime.user_content %></p>
+            <p class="card-text">Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
+            <p class="card-text">Rating: <%= anime.user_rating %>/5</p>
+            <a href="/animes/<%= anime.user.slug %>/<%= anime.slug %>" class="btn btn-outline-info">More Info</a>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+     <% if @user.id == current_user.id %>
+        <h3>You don't have any animes added to your list yet, Please add some!</h3>
+      <% else %>
+        <h3>Does not have any animes saved yet!</h3>
+      <% end %>
+    <% end %>
+  </div>
+</main>

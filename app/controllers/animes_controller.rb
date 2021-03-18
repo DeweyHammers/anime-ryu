@@ -53,8 +53,8 @@ class AnimesController < ApplicationController
 
   get '/animes/:user_slug/:anime_slug' do
     if logged_in?
-      @user = User.find_by_slug(params[:user_slug])
-      @anime = @user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
+      user = User.find_by_slug(params[:user_slug])
+      @anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
       erb :'animes/show'
     else
       redirect '/login'
@@ -92,8 +92,10 @@ class AnimesController < ApplicationController
 
   delete '/animes/:user_slug/:anime_slug/delete' do
     user = User.find_by_slug(params[:user_slug])
-    anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
-    anime.delete
+    if user.id == current_user.id
+      anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
+      anime.delete
+    end
     redirect "users/#{user.slug}"
   end
 end

@@ -3,7 +3,7 @@ body {
   background-color: #DCE1E3;
 }
 
-.form-container {
+.anime-container {
   margin-top: 150px;
 }
 
@@ -16,4 +16,18 @@ body {
   border: 1px solid #D9DDDC;
   border-radius: 16px;
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+.anime-card {
+  background-color: #D9DDDC;
+  width: 100%;
+  max-width: 800px;
+  padding: 15px;
+  margin: auto;
+  border: 1px solid #D9DDDC;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+a:link {
+  text-decoration: none;
 }
