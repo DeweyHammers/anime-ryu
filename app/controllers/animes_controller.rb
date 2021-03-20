@@ -38,7 +38,9 @@ class AnimesController < ApplicationController
 
   post '/animes/new/:slug' do
     anime = Anime.new_from_api(params[:slug])
-    if params[:user_content] != '' && params[:user_episode] != '' && params[:user_rating] != ''
+    if params[:user_content]
+      params[:user_episode] = 1 if params[:user_episode] == 'Current Episode'
+      params[:user_rating] = 1 if params[:user_rating] == 'Choose Your Rating'
       anime.update(
         user_content: params[:user_content],
         user_current_ep: params[:user_episode], 
@@ -63,12 +65,12 @@ class AnimesController < ApplicationController
 
   get '/animes/:user_slug/:anime_slug/edit' do
     if logged_in?
-      @user = User.find_by_slug(params[:user_slug])
-      @anime = @user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
-      if @user.id  == current_user.id
+      user = User.find_by_slug(params[:user_slug])
+      @anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
+      if user.id  == current_user.id
         erb :'animes/edit'
       else
-        redirect "/animes/#{@user.slug}/#{@anime.slug}"
+        redirect "/animes/#{user.slug}/#{@anime.slug}"
       end
     else
       redirect '/login'
@@ -76,9 +78,11 @@ class AnimesController < ApplicationController
   end
 
   patch '/animes/:user_slug/:anime_slug/edit' do
-    if params[:user_content] != '' && params[:user_episode] != '' && params[:user_rating] != ''
+    if params[:user_content]
       user = User.find_by_slug(params[:user_slug])
       anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
+      params[:user_episode] = anime.user_current_ep if params[:user_episode] == 'Change Your Episode'
+      params[:user_rating] = anime.user_rating if params[:user_rating] == 'Update Your Rating'
       anime.update(
         user_content: params[:user_content],
         user_current_ep: params[:user_episode],
