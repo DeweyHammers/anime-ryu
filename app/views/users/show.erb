@@ -15,15 +15,18 @@
             <p class="card-text">Current Episode: <%= anime.user_current_ep %>/<%= anime.episodes %></p>
             <p class="card-text">Rating: <%= anime.user_rating %>/5</p>
             <a href="/animes/<%= anime.user.slug %>/<%= anime.slug %>" class="btn btn-outline-info">More Info</a>
+            <% if anime.user.id == current_user.id %>
+              <form class='mt-2' method="POST" action='/animes/<%= anime.user.slug %>/<%= anime.slug %>/delete'>
+                <input type="hidden" name="_method" value='DELETE'>
+                <a class="btn btn-outline-success" href="/animes/<%= anime.user.slug %>/<%= anime.slug %>/edit">Update</a>  
+                <input class="btn btn-outline-danger" type="submit" value="Delete">
+              </form>
+            <% end %>
           </div>
         </div>
       <% end %>
     <% else %>
-     <% if @user.id == current_user.id %>
-        <h3>You don't have any animes added to your list yet, Please add some!</h3>
-      <% else %>
-        <h3>Does not have any animes saved yet!</h3>
-      <% end %>
+      <h3>You don't have any animes added to your list yet, Please add some!</h3>
     <% end %>
   </div>
 </main>

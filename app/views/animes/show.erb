@@ -13,10 +13,10 @@
         <a class="btn btn-outline-secondary" href='/animes/home'>Home</a>
         <a class="btn btn-outline-secondary" href='/users/<%= @anime.user.slug %>'><%= @anime.user.id == current_user.id ? 'Your Show Page' : "#{@anime.user.name} Show Page" %></a>
         <% if @anime.user.id == current_user.id %>
-          <a class="btn btn-outline-success" href="/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/edit">Update</a>
           <form class='mt-2' method="POST" action='/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/delete'>
             <input type="hidden" name="_method" value='DELETE'>
-            <input class="btn btn-outline-danger" type="submit" value="Delete">  
+            <a class="btn btn-outline-success" href="/animes/<%= @anime.user.slug %>/<%= @anime.slug %>/edit">Update</a>  
+            <input class="btn btn-outline-danger" type="submit" value="Delete">
           </form>
         <% end %>
       </div>
