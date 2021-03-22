@@ -3,7 +3,7 @@
     <% if user.animes != [] %>
       <div class='anime-card mb-5'>
         <% if user.id != current_user.id %>
-          <h1><a class="link-secondary" href="users/<%= user.slug %>"><%= user.name %>'s</a> Anime list</h1>
+          <h1><a class="link-secondary" href="/users/<%= user.slug %>"><%= user.name %>'s</a> Anime list</h1>
             <% else %>
           <h1>Your Anime list</h1>
         <% end %>
