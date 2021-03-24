@@ -28,6 +28,11 @@ body {
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
 }
 
+.anime-alert {
+  width: 40%;
+  margin: auto;
+}
+
 a:link {
   text-decoration: none;
 }

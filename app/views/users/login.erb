@@ -1,14 +1,20 @@
 <main class='anime-container text-center'>
+  <% if flash.has?(:message) %>
+    <div class="alert alert-danger anime-alert mb-2">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
   <div class='anime-form'>
     <form action='/login' method='POST'>
       <img class="mb-4" src="images/dragon_user.png" alt="" width="100" height="100">
       <h1 class='h3 mb-3 fw-normal'>Please Sign In</h1>
       <div class="form-floating mb-1">
-        <input class="form-control" type='text' id="username" name='name' placeholder='Username' required>
+        <input class="form-control" type='text' id="username" name='name' placeholder='Username'>
         <label for="username">Username</label>
       </div>
       <div class="form-floating">
-        <input class="form-control mb-3" id='password' type="password" name='password' placeholder='Password' required>
+        <input class="form-control mb-3" id='password' type="password" name='password' placeholder='Password'>
         <label for="password">Password</label>
       </div>
       <input class='w-100 btn btn-lg btn-outline-secondary' type="submit" value='Login'>

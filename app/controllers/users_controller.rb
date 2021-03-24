@@ -9,14 +9,27 @@ class UsersController < ApplicationController
   end
 
   post '/sign-up' do
-    if params[:name] != '' && params[:email] != '' && params[:password] != '' && params[:password_confirmation]  != '' &&
-       !User.find_by(name: params[:name], email: params[:email]) &&
-       params[:password] == params[:password_confirmation] && 
-       params[:password].length >= 8 
-        user = User.create(params)
-        session['user_id'] = user.id
-        redirect "/animes/home"
+    if params[:name] != '' && params[:email] != '' && params[:password] != '' && params[:password_confirmation]  != '' 
+      if !User.find_by(name: params[:name], email: params[:email])
+        if params[:password] == params[:password_confirmation]
+          if params[:password].length >= 8
+            user = User.create(params)
+            session['user_id'] = user.id
+            redirect "/animes/home"
+          else
+            flash[:message] = 'Password must be 8 characters or longer!'
+            redirect '/sign-up'
+          end
+        else
+          flash[:message] = 'Password does not match!'
+          redirect '/sign-up'
+        end
+      else
+        flash[:message] = 'User with that account has been already made!'
+        redirect '/sign-up'
+      end
     else
+      flash[:message] = 'Nothing was passed in!'
       redirect '/sign-up'
     end 
   end

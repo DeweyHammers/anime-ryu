@@ -1,22 +1,15 @@
 <main class='text-center anime-container'>
-  <div class='anime-card mb-5'>
-    <div class='card'>
-      <img class="card-img-top" src='<%= @anime.image_url %>'><br>
-      <div class='card-body'>
-        <h1 class="card-title"><%= @anime.name %></h1>
-        <a class="btn btn-outline-info" target="_blank" href='<%= @anime.url %>'>MyAnimeList</a>
-        <p class="card-text"><%= @anime.synopsis %></p>
-        <h3 class="card-text">Find a new anime?</h3>
-        <a class="btn btn-outline-danger" href='/animes/search'>Remove</a>
-      </div>
+  <% if flash.has?(:message) %>
+    <div class="alert alert-danger anime-alert mb-2">
+      <%= flash[:message] %>
     </div>
-  </div>
+  <% end %>
 
   <div class='anime-form mb-5'>
     <form action='/animes/new/<%= @anime.slug %>' method="POST">
       <h2>Please fill out your info!</h2>
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px" required></textarea>
+        <textarea class="form-control" placeholder="Leave a review here" name='user_content' id="user_content" style="height: 100px"></textarea>
         <label for="user_content">Your Review</label>
       </div>
       <select class="form-select mt-2" aria-label="Default select example" id="user_eposode" name="user_episode">
@@ -39,5 +32,18 @@
       </select>
       <input class='w-100 btn btn-lg btn-outline-secondary mt-2' type='submit' value='Save Anime'>
     </form>
+  </div>
+
+  <div class='anime-card mb-5'>
+    <div class='card'>
+      <img class="card-img-top" src='<%= @anime.image_url %>'><br>
+      <div class='card-body'>
+        <h1 class="card-title"><%= @anime.name %></h1>
+        <a class="btn btn-outline-info" target="_blank" href='<%= @anime.url %>'>MyAnimeList</a>
+        <p class="card-text"><%= @anime.synopsis %></p>
+        <h3 class="card-text">Find a new anime?</h3>
+        <a class="btn btn-outline-danger" href='/animes/search'>Remove</a>
+      </div>
+    </div>
   </div>
 </main>

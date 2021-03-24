@@ -21,8 +21,14 @@ class AnimesController < ApplicationController
     if params[:name] != ''
       anime = Anime.new_from_api(params[:name])
       check = current_user.animes.select {|user_anime| user_anime.name == anime.name}.first
-      redirect !check ? "/animes/new/#{anime.slug}" : '/animes/search'
-    else 
+      if !check  
+        redirect "/animes/new/#{anime.slug}" 
+      else 
+        flash[:message] = "That anime has already been created!" 
+        redirect '/animes/search'
+      end
+    else
+      flash[:message] = "You did not enter a name!" 
       redirect '/animes/search'
     end
   end
@@ -49,7 +55,8 @@ class AnimesController < ApplicationController
       )
       redirect "/animes/#{anime.user.slug}/#{anime.slug}"
     else
-      redirect "/animes/#{anime.slug}/new"
+      flash[:message] = "Please fill out your review!" 
+      redirect "/animes/new/#{anime.slug}"
     end
   end
 
@@ -79,19 +86,24 @@ class AnimesController < ApplicationController
 
   patch '/animes/:user_slug/:anime_slug/edit' do
     user = User.find_by_slug(params[:user_slug])
-    if params[:user_content] != '' && user.id == current_user.id
-      anime = current_user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
-      params[:user_episode] = anime.user_current_ep if params[:user_episode] == 'Change Your Episode'
-      params[:user_rating] = anime.user_rating if params[:user_rating] == 'Update Your Rating'
-      anime.update(
-        user_content: params[:user_content],
-        user_current_ep: params[:user_episode],
-        user_rating: params[:user_rating]
-      )
-    else
-      redirect "/animes/#{current_user.slug}/#{anime.slug}/edit"
+    if user.id == current_user.id
+      anime = user.animes.select {|anime| anime.slug == params[:anime_slug]}.first
+      if params[:user_content] != '' 
+        params[:user_episode] = anime.user_current_ep if params[:user_episode] == 'Change Your Episode'
+        params[:user_rating] = anime.user_rating if params[:user_rating] == 'Update Your Rating'
+        anime.update(
+          user_content: params[:user_content],
+          user_current_ep: params[:user_episode],
+          user_rating: params[:user_rating]
+        )
+        redirect "/animes/#{user.slug}/#{anime.slug}"
+      else
+        flash[:message] = "User review cannot be blank!"
+        redirect "/animes/#{user.slug}/#{anime.slug}/edit"
+      end
+    else 
+      redirect "/animes/#{user.slug}/#{anime.slug}"
     end
-    redirect "/animes/#{current_user.slug}/#{anime.slug}"
   end
 
   delete '/animes/:user_slug/:anime_slug/delete' do
