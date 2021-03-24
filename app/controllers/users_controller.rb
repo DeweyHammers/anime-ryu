@@ -18,19 +18,19 @@ class UsersController < ApplicationController
             redirect "/animes/home"
           else
             flash[:message] = 'Password must be 8 characters or longer!'
-            redirect '/sign-up'
+            erb :'user/sign-up'
           end
         else
           flash[:message] = 'Password does not match!'
-          redirect '/sign-up'
+          erb :'user/sign-up'
         end
       else
         flash[:message] = 'User with that account has been already made!'
-        redirect '/sign-up'
+        erb :'user/sign-up'
       end
     else
       flash[:message] = 'Nothing was passed in!'
-      redirect '/sign-up'
+      erb :'user/sign-up'
     end 
   end
 

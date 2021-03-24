@@ -16,11 +16,11 @@ class SessionsController < ApplicationController
         redirect "/animes/home"
       else
         flash[:message] = 'Username and Password did not match!'
-        redirect "/login"
+        erb :"users/login"
       end
     else
       flash[:message] = 'Nothing was passed in!'
-      redirect '/login'
+      erb :'users/login'
     end
   end
 
