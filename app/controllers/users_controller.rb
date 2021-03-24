@@ -1,5 +1,5 @@
 class UsersController < ApplicationController 
-
+  #change this
   get '/sign-up' do
     if logged_in?
       redirect '/animes/home'
