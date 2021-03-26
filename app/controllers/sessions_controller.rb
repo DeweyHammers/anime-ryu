@@ -9,18 +9,13 @@ class SessionsController < ApplicationController
   end
 
   post '/login' do
-    if params[:name] != '' && params[:password] != ''
-      user = User.find_by(name: params[:name])
-      if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect "/animes/home"
-      else
-        flash[:message] = 'Username and Password did not match!'
-        erb :"users/login"
-      end
+    user = User.find_by(name: params[:name])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/animes/home"
     else
-      flash[:message] = 'Nothing was passed in!'
-      erb :'users/login'
+      flash[:message] = 'Username and Password did not match!'
+      erb :"users/login"
     end
   end
 
